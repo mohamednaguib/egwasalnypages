@@ -805,6 +805,7 @@ body .ui-tooltip {
 ----------------------------------*/
 .stats {
 margin-bottom: 10px;
+white-space: nowrap;
 }
 .stats .block {
 overflow:hidden;
@@ -818,7 +819,7 @@ border-right: 2px solid #5c5c5c;
 overflow:hidden;
 border:none;
 padding-top: 15px;
-padding-left:20px;
+padding-left:10px;
 float: left;
 text-align: center;
 
@@ -1318,7 +1319,7 @@ overflow:hidden;
 white-space: nowrap;
 font-family:Arial, Helvetica, sans-serif;
  text-overflow: ellipsis ;
- width:80px;
+ width:20px;
 }
 
 *{
