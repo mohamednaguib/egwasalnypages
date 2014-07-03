@@ -1324,7 +1324,7 @@ overflow:hidden;
 white-space: nowrap;
 font-family:Arial, Helvetica, sans-serif;
 text-overflow: ellipsis ;
- width:100px;
+ width:10px;
 }
 
 *{
