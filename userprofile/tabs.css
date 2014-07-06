@@ -744,6 +744,7 @@ button.ui-button::-moz-focus-inner {
 	margin-right:15px;
 	background-color:#ffffff;
 	text-align:center;
+	width:80%;
 }
 .ui-tooltip {
 	padding: 8px;
