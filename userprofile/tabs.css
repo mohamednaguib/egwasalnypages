@@ -738,7 +738,11 @@ button.ui-button::-moz-focus-inner {
 	border:1px solid #007aff;
 	border-width:1px;
 	background: none;
+<<<<<<< HEAD
 	margin-top:49px;
+=======
+	margin-top:51px;
+>>>>>>> FETCH_HEAD
 	padding:30px 15px;
 	margin-left:15px;
 	margin-right:15px;
@@ -1183,8 +1187,13 @@ margin-bottom: 7px;
 font-size: large;
 padding-top: 10px;
 padding-bottom: 10px;
+<<<<<<< HEAD
 padding-left: 14px;
 padding-right: 15px;
+=======
+padding-left: 16px;
+padding-right: 16px;
+>>>>>>> FETCH_HEAD
 }
 
 /*photoreport*/
