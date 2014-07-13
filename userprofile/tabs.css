@@ -8,48 +8,14 @@
 }
 
 /*Profile Pic*/
-<<<<<<< HEAD
-.profilepic{
-width: 200px;
-height: 200px;
-background-size: cover;
-display: block;
-border-radius: 50%;
--webkit-border-radius: %%;
--moz-border-radius: 100px;
-border: 3px solid #007aff;
-padding:5px 5px 0;
-text-align:center;
-margin: 0 auto;
-	}
-.profilepic img { border-radius:50%; width:100%; height:195px;}	
-.profile.profilepic {
-width: 200px;
-height:200px;
-border-radius: 50%;
-border: 2px solid #007aff;
-margin-top: 2%;
-}
-.username{
-	margin:20px auto;
-	font-size:large;
-	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-	text-decoration:none;
-	color:#5c5c5c;
-	font-weight:lighter;
-	 text-overflow: ellipsis 
-	}
-
-in-top:{ 2%;
-=======
 .profilepic {
     width: 200px;
     height: 200px;
     background-size: cover;
     display: block;
-    border-radius: 100px;
-    -webkit-border-radius: 100px;
-    -moz-border-radius: 100px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
     border: 3px solid #007aff;
     padding: 5px 5px 0;
     text-align: center;
@@ -63,7 +29,7 @@ in-top:{ 2%;
     }
 
 .profile.profilepic {
-    width: 35%;
+    width: 200px;
     border-radius: 50%;
     border: 2px solid #007aff;
     margin-top: 2%;
@@ -81,7 +47,6 @@ in-top:{ 2%;
 
 in-top: {
     2%;
->>>>>>> FETCH_HEAD
 }
 /* Icons
 ----------------------------------*/
@@ -903,7 +868,7 @@ button.ui-button::-moz-focus-inner {
     border: 1px solid #007aff;
     border-width: 1px;
     background: none;
-    margin-top: 51px;
+    margin-top: 52px;
     padding: 30px 15px;
     margin-left: 15px;
     margin-right: 15px;
@@ -1903,8 +1868,8 @@ body .ui-tooltip {
     font-size: large;
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 15px;
-    padding-right: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 /*photoreport*/
@@ -1913,14 +1878,15 @@ body .ui-tooltip {
 }
 
     .userPostedPhotos .containerOuter {
-        position: absolute;
-        left: 3px;
-        padding-bottom: 10px;
-        padding-top: 0;
-        padding-right: 10px;
-        right: 0;
-        height: 155px;
-        overflow: hidden;
+ position: absolute;
+left: 0;
+padding-bottom: 10px;
+padding-left: 10px;
+padding-top: 0;
+padding-right: 10px;
+right: 0;
+height: 85px;
+overflow: hidden;
     }
 
 .iosSlider2 .slider .item, .iosSlider .slider .item {
@@ -1936,7 +1902,6 @@ body .ui-tooltip {
     position: relative;
     border: #007aff solid 1px;
 }
-
 
 
 
