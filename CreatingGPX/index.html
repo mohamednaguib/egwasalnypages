@@ -24,28 +24,42 @@ var lines = [];
 var markers = [];
 function initialize() {
         directionsDisplay = new google.maps.DirectionsRenderer({ draggable: true, suppressMarkers: true, suppressPolylines: false });
-        var cairo = new google.maps.LatLng('30.045800', '31.241764');
         var mapOptions = {
             zoom: 11,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
-            center: cairo,
             width: 1105
         };
         map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        //map.overlayMapTypes.insertAt(0, customMapType);
-        //polyPoints = new google.maps.MVCArray(); // collects coordinates
-        //preparePolyline(); // create a Polyline object
+        if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
+
+
+      map.setCenter(pos);
+    }, function() {
+      handleNoGeolocation(true);
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleNoGeolocation(false);
+  }
         directionsDisplay.setMap(map);
-        //google.maps.event.addListener(directionsDisplay, 'directions_changed', function () {
-        //    reloadDirections(directionsDisplay.directions);
-        //});
-        //google.maps.event.addListener(directionsDisplay, 'dragend', function () {
-        //    reloadDirections(directionsDisplay.directions);
-        //});
-        //if ($("#startpoint").val() != "" && $("#endpoint").val() != "") {
-        //    LoadRoadData('@Model.RoadId');
-        //}
     }
+    function handleNoGeolocation(errorFlag) {
+  if (errorFlag) {
+    var content = 'Error: The Geolocation service failed.';
+  } else {
+    var content = 'Error: Your browser doesn\'t support geolocation.';
+  }
+
+  var options = {
+    map: map,
+    position: new google.maps.LatLng('30.045800', '31.241764')
+  };
+
+  map.setCenter(options.position);
+}
     google.maps.event.addDomListener(window, 'load', initialize);
 function addLatLng(event) {
             var marker = new google.maps.Marker({
