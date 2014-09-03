@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <meta http-equiv="Content-Style-Type" content="text/css">
+<title>Wasalny Competition</title>
+
+<style> 
+*{margin:0;padding:0;}
+body{background-color:#f6f8fa;text-align:center;}
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+	<script type="text/javascript">
+var directionsDisplay;
+var location;
+var markersArray = [];
+var map;
+var GeoMetriesArray = [];
+var directionsDisplay;
+var lines = [];
+var markers = [];
+function initialize() {
+        directionsDisplay = new google.maps.DirectionsRenderer({ draggable: true, suppressMarkers: true, suppressPolylines: false });
+        var cairo = new google.maps.LatLng('30.045800', '31.241764');
+        var mapOptions = {
+            zoom: 11,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            center: cairo,
+            width: 1105
+        };
+        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        //map.overlayMapTypes.insertAt(0, customMapType);
+        //polyPoints = new google.maps.MVCArray(); // collects coordinates
+        //preparePolyline(); // create a Polyline object
+        directionsDisplay.setMap(map);
+        //google.maps.event.addListener(directionsDisplay, 'directions_changed', function () {
+        //    reloadDirections(directionsDisplay.directions);
+        //});
+        //google.maps.event.addListener(directionsDisplay, 'dragend', function () {
+        //    reloadDirections(directionsDisplay.directions);
+        //});
+        //if ($("#startpoint").val() != "" && $("#endpoint").val() != "") {
+        //    LoadRoadData('@Model.RoadId');
+        //}
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+function addLatLng(event) {
+            var marker = new google.maps.Marker({
+                position: event.latLng,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+                map: map
+            });
+            markersArray.push(event.latLng);
+            markers.push(marker);
+        }
+$(function(){
+    	$('#addPoints').on('click',function(){
+    		google.maps.event.addListener(map, 'click', addLatLng);
+    	});
+
+        $('#draw').on('click', function()
+        {
+            var directionsService = new google.maps.DirectionsService();
+            directionsDisplay = new google.maps.DirectionsRenderer({ draggable: true, suppressMarkers: true, suppressPolylines: false });
+            var line;
+            var markerBounds = new google.maps.LatLngBounds();
+            for(var i=0;i < markersArray.length - 1;i++)
+            {
+                var request = {
+                    origin: markersArray[i],
+                    destination: markersArray[i+1],
+                    travelMode: google.maps.DirectionsTravelMode.DRIVING
+                };
+                directionsService.route(request, function (response, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            directionsDisplay.setDirections(response);
+                            var last = 0;
+                            for (var n = 0; n < response.routes[0].overview_path.length - 1; n++) {
+                                last++;
+                                var point = response.routes[0].overview_path[n];
+                                var point2 = response.routes[0].overview_path[n + 1];
+                                markerBounds.extend(point);
+                                line = new google.maps.Polyline({
+                                    path: [point, point2],
+                                    strokeOpacity: 1.0,
+                                    strokeWeight: 5,
+                                    strokeColor: "#FF0000",
+                                    map: map
+                                });
+                                lines.push(line);
+                                var data = new Object;
+                                data.lat = point.lat();
+                                data.lon = point.lng();
+                                GeoMetriesArray.push(data);
+                            }
+                        }
+                    });
+             directionsDisplay.setMap(map);   
+            }
+            map.fitBounds(markerBounds);
+        });
+        $('#save').on('click', function(){
+            var gpx = 
+            "<?xml version=\"1.0\"?>\n<gpx creator=\"GPS Visualizer http://www.gpsvisualizer.com/\" version=\"1.1\" xmlns=\"http://www.topografix.com/GPX/1/1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">\n";
+            if (GeoMetriesArray.length > 0) {
+                for (var i = 0; i < GeoMetriesArray.length; i++) {
+                   gpx += "<wpt lat=\""+  GeoMetriesArray[i].lat +"\" lon=\"" +  GeoMetriesArray[i].lon + "\"><name>" +  GeoMetriesArray[i].lat +","+  GeoMetriesArray[i].lon +"</name></wpt>\n";
+                };
+            };
+            gpx+= "</gpx>";
+            var pom = document.createElement('a');
+            pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(gpx));
+            pom.setAttribute('download', "geolocation.gpx");
+            pom.click();
+        });
+        $('#clear').on('click', function(){
+            clearAllMapRoad();
+        });
+    });
+function clearAllMapRoad() {
+        if(directionsDisplay != null)
+            directionsDisplay.setMap(null);
+        for (var i = 0; i < lines.length; i++) {
+            lines[i].setMap(null);
+        }
+        GeoMetriesArray = [];
+        directionsDisplay = null;
+        markersArray = [];
+        lines = [];
+        for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+        markers = [];
+    }
+</script>
+	<div><span><a href="#" id="addPoints">Add Points</a></span>&nbsp; <span><a href="#" id="draw">Draw</a></span>&nbsp; <span><a href="#" id="save">Save</a></span>
+        &nbsp; <span><a href="#" id="clear">Clear</a></span></div>
+<div style="width: 100%; height: 700px;" id="map">
+      </div>
+
+</body>
+</html>
